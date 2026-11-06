@@ -26,9 +26,14 @@ const SPOTS = {
 const Doodles = memo(function Doodles({ theme, line, mobile }) {
   const set = SETS[theme]
   if (!set) return null
-  const r = rng(`${theme}:doodles:${line}`)
+  // Francis: only in the middle of the song, a couple at a time, changing
+  // every few lines instead of every line
+  const calm = theme === 'francis'
+  if (calm && (line < 5 || line > 10)) return null
+  const key = calm ? Math.floor((line - 5) / 3) : line
+  const r = rng(`${theme}:doodles:${key}`)
   const spots = [...SPOTS[theme][mobile ? 'phone' : 'desk']]
-  const n = mobile ? 2 : r.int(3, 4)
+  const n = calm ? (mobile ? 1 : 2) : mobile ? 2 : r.int(3, 4)
   const pool = [...set]
   const items = []
   for (let k = 0; k < n && spots.length && pool.length; k++) {
@@ -36,7 +41,7 @@ const Doodles = memo(function Doodles({ theme, line, mobile }) {
     const name = pool.splice(Math.floor(r() * pool.length), 1)[0]
     items.push(
       <span
-        key={`${line}-${k}`}
+        key={`${key}-${k}`}
         className="doodle"
         style={{
           left: `${x}%`,
@@ -50,7 +55,7 @@ const Doodles = memo(function Doodles({ theme, line, mobile }) {
       </span>,
     )
   }
-  return <div className="doodles" aria-hidden="true">{items}</div>
+  return <div className={`doodles doodles-${theme}`} aria-hidden="true">{items}</div>
 })
 
 export default Doodles
