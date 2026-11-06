@@ -90,6 +90,7 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
             : {
                 backgroundImage: `url(${!mobile && song.posterDesk ? song.posterDesk : song.poster})`,
                 backgroundPosition: mobile ? 'center' : song.posterPos,
+                ...(!mobile && song.deskSize ? { backgroundSize: song.deskSize } : {}),
               }
         }
       />

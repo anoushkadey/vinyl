@@ -34,29 +34,35 @@ export const songs = [
     accent: '#ee5f93',
     lyrics: parse(`
 (0:08) Hello?
-(0:28 - 0:36) Are you into me, like I'm into you? Do you wanna do the things I wanna do with you?
-(0:37 - 0:46) You're so close, and yet so far. I wonder how you look when you're in the dark
-(0:48 - 0:56) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
-(0:59 - 1:05) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
-(1:05 - 1:10) Played you DOOM, man, you play Drake
-(1:11 - 1:13) You left crumbs all on my face
-(1:13 - 1:16) Taste like RiRi, taste like Bey
-(1:17 - 1:19) Bought you Fenty, took his place
-(1:19 - 1:21) Rolled your weed and kissed your face
-(1:22 - 1:24) Man, wanna smoke you out like all-day
-(1:24 - 1:26) Man, wanna do a quickie in the hallway, can
-(1:26 - 1:28) You be all down for the boy, no mass
-(1:29 - 1:30) Hot jump, skip rope, twenty-three years old
-(1:31 - 1:33) Made a hundred grand and went broke, I'm an asshole
-(1:33 - 1:35) Clairo, will you be my real or my fake though?
-(1:36 - 1:38) Pesos, cashing out checks when I say so
-(1:38 - 1:40) Frame my life and take my soul
-(1:40 - 1:41) Make me crazy, make me old
-(1:42 - 1:43) Save me roses, text my phone
-(1:43 - 1:45) Fake like rappers, fake like jokes
-(1:45) I know
-(1:47 - 1:55) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
-(1:58 - 2:05) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
+(0:28 - 0:32) Are you into me, like I'm into you?
+(0:32 - 0:37) Do you wanna do the things I wanna do with you?
+(0:37 - 0:42) You're so close, and yet so far
+(0:42 - 0:48) I wonder how you look when you're in the dark
+(0:48 - 0:52) You're just one click away, click away, click away
+(0:52 - 0:56) From something real or fake, real or fake, real or fake
+(0:56 - 1:01) You're just one click away, click away, click away
+(1:01 - 1:05) From something real or fake, real or fake, real or fake
+(1:05 - 1:08) Played you DOOM, man, you play Drake
+(1:08 - 1:11) You left crumbs all on my face
+(1:11 - 1:14) Taste like RiRi, taste like Bey
+(1:14 - 1:16) Bought you Fenty, took his place
+(1:16 - 1:19) Rolled your weed and kissed your face
+(1:19 - 1:21) Man, wanna smoke you out like all-day
+(1:21 - 1:24) Man, wanna do a quickie in the hallway, can
+(1:24 - 1:26) You be all down for the boy, no mass
+(1:26 - 1:29) Hot jump, skip rope, twenty-three years old
+(1:29 - 1:31) Made a hundred grand and went broke, I'm an asshole
+(1:31 - 1:33) Clairo, will you be my real or my fake though?
+(1:33 - 1:36) Pesos, cashing out checks when I say so
+(1:36 - 1:38) Frame my life and take my soul
+(1:38 - 1:40) Make me crazy, make me old
+(1:40 - 1:42) Save me roses, text my phone
+(1:42 - 1:44) Fake like rappers, fake like jokes
+(1:44 - 1:45) I know
+(1:47 - 1:51) You're just one click away, click away, click away
+(1:51 - 1:55) From something real or fake, real or fake, real or fake
+(1:55 - 2:00) You're just one click away, click away, click away
+(2:00 - 2:05) From something real or fake, real or fake, real or fake
 `),
   },
   {
@@ -156,9 +162,12 @@ export const songs = [
     theme: 'linger',
     audio: asset('audio/linger.mp3'),
     poster: asset('posters/linger.jpg'),
-    posterDesk: asset('posters/linger-wide.jpg'),
+    posterDesk: asset('posters/linger-desk.jpg'),
+    // the cover has a black background, so on laptop it is shown at full
+    // height (not stretched to the width) to keep it sharp
+    deskSize: 'auto 100%',
     cover: asset('covers/linger.jpg'),
-    posterPos: 'center center',
+    posterPos: 'center',
     accent: '#5d7a3a',
     lyrics: parse(`
 (0:49 - 0:59) If you, if you could return, don't let it burn, don't let it fade

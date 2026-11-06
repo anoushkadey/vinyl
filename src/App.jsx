@@ -3,7 +3,9 @@ import { songs } from './data/songs'
 import Crate from './components/Crate'
 import Player from './components/Player'
 
-const MOBILE_QUERY = '(max-width: 760px), (max-width: 1024px) and (orientation: portrait)'
+// phone layout only on a tall, portrait screen; any landscape window (a laptop,
+// or a laptop's narrow side panel) keeps the laptop layout
+const MOBILE_QUERY = '(max-aspect-ratio: 4/5)'
 
 function useMobile() {
   const [m, setM] = useState(() => window.matchMedia(MOBILE_QUERY).matches)
