@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import { rng, burstPolygon, tornPolygon } from '../lib/rng'
 import { THEMES } from './cutouts'
+import PondLine from './PondLyrics'
 
 const clean = (w) => w.replace(/[^a-z0-9']/gi, '')
 
@@ -132,6 +133,8 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
 })
 
 export default function Lyrics({ song, active, mobile }) {
+  const ponds = !mobile && !!song.posterWide
+  const Line = ponds ? PondLine : LyricLine
   const [leavingIdx, setLeavingIdx] = useState(null)
   const last = useRef(active)
 
@@ -146,12 +149,12 @@ export default function Lyrics({ song, active, mobile }) {
   }, [active])
 
   return (
-    <div className="lyrics-stage" aria-live="polite">
+    <div className={`lyrics-stage${ponds ? ' ponds' : ''}`} aria-live="polite">
       {leavingIdx != null && leavingIdx !== active && song.lyrics[leavingIdx] && (
-        <LyricLine key={`l${leavingIdx}`} song={song} line={song.lyrics[leavingIdx]} idx={leavingIdx} mobile={mobile} leaving />
+        <Line key={`l${leavingIdx}`} song={song} line={song.lyrics[leavingIdx]} idx={leavingIdx} mobile={mobile} leaving />
       )}
       {active >= 0 && (
-        <LyricLine key={`a${active}`} song={song} line={song.lyrics[active]} idx={active} mobile={mobile} />
+        <Line key={`a${active}`} song={song} line={song.lyrics[active]} idx={active} mobile={mobile} />
       )}
       <span className="sr-only">{active >= 0 ? song.lyrics[active].text : ''}</span>
     </div>

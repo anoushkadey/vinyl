@@ -210,22 +210,19 @@ const francis = {
 /* Fade Into You — Mazzy Star. Edgy gothic: purple scissor-cut tiles on
    black with white letters in mismatched fonts (typewriter, script,
    blackletter, bold sans, serif), like the purple/black reference sheet. */
-const FADE_BG = ['#5b2386', '#7a3aa3', '#9a4cb8', '#45186a', '#a868c6', '#6a2c93', '#8b3fae', '#b07ccc', '#3a1258']
+const FADE_BG = ['#a2449a', '#8a3f9a', '#b25aa8', '#6b2f8a', '#9b72b8', '#c06aa8', '#7d3a8c', '#5a2678']
 const FADE_FONTS = [
   "'Special Elite', monospace",
   "'Great Vibes', cursive",
-  "'UnifrakturMaguntia', serif",
+  "'DM Serif Display', serif",
   "'Archivo Black', sans-serif",
   "'Playfair Display', serif",
-  "'DM Serif Display', serif",
-  "'Courier Prime', monospace",
 ]
 const fade = {
   rowChars: 11,
   scrap: { fill: 'black-paper', chance: 0.75 },
-  stickers: ['✝', '✦', '✧'],
-  stickerColor: '#c9a0e8',
-  spiral: 1,
+  stickers: ['✦', '✧'],
+  stickerColor: '#e6b6dc',
   word(w, { r }) {
     return (
       <span className="cut-word fade-word">

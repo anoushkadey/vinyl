@@ -98,7 +98,10 @@ export const songs = [
     artist: 'Mitski',
     theme: 'francis',
     audio: asset('audio/francis-forever.mp3'),
-    poster: asset('posters/francis-forever.jpg'),
+    poster: asset('posters/francis-clean.jpg'),
+    // landscape: the ripple artwork mirrored into three ponds; lyrics are
+    // laid out in each pond where the poster's own word labels used to be
+    posterWide: asset('posters/francis-wide.jpg'),
     cover: asset('covers/francis-forever.jpg'),
     posterPos: 'center 45%',
     accent: '#1f3550',

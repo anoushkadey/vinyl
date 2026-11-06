@@ -77,9 +77,24 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
       <div
         key={`poster-${song.id}`}
         className="poster"
-        style={{ backgroundImage: `url(${song.poster})`, backgroundPosition: mobile ? 'center' : song.posterPos }}
+        style={
+          !mobile && song.posterWide
+            ? { backgroundImage: `url(${song.posterWide})`, backgroundSize: '100% 100%' }
+            : { backgroundImage: `url(${song.poster})`, backgroundPosition: mobile ? 'center' : song.posterPos }
+        }
       />
       <div className="poster-shade" />
+      {song.theme === 'fade' && (
+        <div className="bg-spirals" aria-hidden="true">
+          {[
+            { l: '-6%', t: '-14%', s: '44vh', d: '0s' },
+            { l: '72%', t: '54%', s: '52vh', d: '-9s' },
+            { l: '44%', t: '-20%', s: '30vh', d: '-4s' },
+          ].map((p, i) => (
+            <img key={i} src={`${import.meta.env.BASE_URL}spiral-black.png`} alt="" style={{ left: p.l, top: p.t, width: p.s, animationDelay: p.d }} />
+          ))}
+        </div>
+      )}
 
       <button className="back-btn" onClick={onBack}>
         ← back to the crate
@@ -89,8 +104,9 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
 
       <div className="dock" key={`dock-${song.id}`}>
         <div className="np-label">
-          <span className="np-title">{song.title}</span>
-          <span className="np-artist">{song.artist}</span>
+          <span className="np-tape" aria-hidden="true" />
+          <span className="np-title">{song.title.toLowerCase()}</span>
+          <span className="np-artist">{song.artist.toLowerCase()}</span>
         </div>
         <Vinyl cover={song.cover} spinning={playing} className="dock-vinyl" />
         <div className="progress">

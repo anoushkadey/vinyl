@@ -124,7 +124,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     radial-gradient(ellipse at 62% 40%, rgba(0,0,0,.22), transparent 65%),
     linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12));
 }
-.player.theme-francis .poster-shade { background: radial-gradient(ellipse at 18% 85%, rgba(0,0,0,.35), transparent 55%); }
+.player.theme-francis .poster-shade { background: radial-gradient(ellipse at 14% 82%, rgba(0,0,0,.28), transparent 40%); }
 
 .back-btn {
   position: absolute; z-index: 30; left: 24px; top: max(20px, env(safe-area-inset-top));
@@ -142,10 +142,24 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .dock-vinyl { width: 100%; animation: rollOut .9s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes rollOut { from { transform: translateX(-70%) rotate(-160deg); opacity: 0; } }
 
-.np-label { align-self: stretch; text-align: center; margin-bottom: 14px; display: flex; flex-direction: column; gap: 2px; filter: drop-shadow(0 0 1px var(--halo)) drop-shadow(0 0 1px var(--halo)) drop-shadow(0 0 6px rgba(255,255,255,.35)); }
-.np-title { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; font-size: clamp(18px, 1.5vw, 26px); line-height: 1.1; }
-.np-artist { font-family: 'Courier Prime', monospace; font-size: 13px; letter-spacing: .12em; text-transform: lowercase; opacity: .85; }
-
+.np-label {
+  position: relative; align-self: center; margin-bottom: 16px; display: flex; flex-direction: column; align-items: center; gap: 0;
+  transform: rotate(-2deg); animation: pop .4s steps(3, jump-end) .2s both;
+}
+/* a typed strip of paper with a bit of tape, not a glowing title */
+.np-title {
+  font-family: 'Special Elite', monospace; font-size: clamp(15px, 1.25vw, 21px); color: #1d1a17; line-height: 1;
+  background: linear-gradient(175deg, #f4efe4, #e4ddcd); padding: 7px 14px 8px; box-shadow: 0 3px 8px rgba(0,0,0,.3);
+  clip-path: polygon(0 8%, 22% 0, 48% 6%, 76% 1%, 100% 7%, 98% 55%, 100% 94%, 70% 100%, 38% 95%, 10% 100%, 1% 92%, 0 45%);
+}
+.np-artist {
+  margin-top: 3px; font-family: 'Courier Prime', monospace; font-size: 12px; letter-spacing: .06em; color: #f4efe4;
+  background: #141210; padding: 3px 9px 4px; transform: rotate(3deg) translateX(14px);
+}
+.np-tape {
+  position: absolute; top: -9px; left: 50%; width: 54px; height: 16px; transform: translateX(-50%) rotate(4deg);
+  background: rgba(236,228,206,.62); box-shadow: 0 1px 2px rgba(0,0,0,.15); z-index: 1;
+}
 .progress { width: 116%; margin-top: 14px; filter: drop-shadow(0 0 1px var(--halo)) drop-shadow(0 0 1px var(--halo)); }
 .progress input { -webkit-appearance: none; appearance: none; width: 100%; height: 14px; background: transparent; cursor: pointer; display: block; }
 .progress input::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(90deg, var(--ctrl) var(--p), color-mix(in srgb, var(--ctrl) 30%, transparent) var(--p)); }
@@ -239,7 +253,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .lyrics-stage:has(.theme-francis) { font-size: calc(var(--lyr) * .78); }
 /* posters that already carry their own words get knocked back a little so the
    live lyric cut-outs read first */
-.player.theme-francis .poster { filter: blur(3px) brightness(.8) saturate(.9); }
+.player.theme-francis.is-desktop .poster { inset: 0; animation: posterIn .6s steps(4, jump-end) both; }
 .player.theme-linger .poster { filter: brightness(.9); }
 .theme-francis .lyric-row { gap: .5em 1.6em; }
 .theme-francis .lyric-line { gap: .9em; }
@@ -248,9 +262,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   box-shadow: 0 .08em .16em rgba(0,0,0,.18);
 }
 
+.lyrics-stage.ponds { inset: 0 !important; display: block; font-size: min(2.5vh, 1.75vw); }
+.pond-line { position: absolute; inset: 0; }
+.pond-line.leaving { animation: leave .3s steps(3, jump-end) forwards; }
+.pond-pos { position: absolute; }
+.ponds .francis-label { box-shadow: 0 1px 2px rgba(0,0,0,.18); }
+
 /* Fade Into You — purple + black, gothic */
 .player.theme-fade { background: #12081a; }
 .player.theme-fade .poster { opacity: .5; }
+.bg-spirals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.bg-spirals img { --r: 0deg; position: absolute; height: auto; opacity: .3; mix-blend-mode: multiply; animation: spiral 60s linear infinite; transform: translate(-50%, -50%); }
+.player.is-paused .bg-spirals img { animation-play-state: paused; }
 .player.theme-fade .poster-shade { background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(8,3,12,.55) 100%); }
 .lyrics-stage:has(.theme-fade) { font-size: calc(var(--lyr) * 1.12); }
 .theme-fade .lyric-row { gap: .22em .6em; }
@@ -277,7 +300,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .player.is-mobile .lyrics-stage { left: 5vw; right: 5vw; top: 9vh; bottom: 50vh; }
 .player.is-mobile .dock { left: 50%; transform: translateX(-50%); bottom: max(16px, env(safe-area-inset-bottom)); width: min(64vw, 36vh); }
 .player.is-mobile .progress { width: 118%; }
-.player.is-mobile .np-title { font-size: 19px; }
+.player.is-mobile .np-title { font-size: 16px; }
 .player.is-mobile .back-btn { left: 14px; font-size: 12px; }
 
 @media (prefers-reduced-motion: reduce) {
