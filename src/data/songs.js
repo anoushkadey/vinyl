@@ -27,6 +27,7 @@ export const songs = [
     title: 'Hello?',
     artist: 'Clairo ft. Rejjie Snow',
     theme: 'hello',
+    offset: 2, // lyrics were landing ~2s early against this recording
     audio: asset('audio/hello.mp3'),
     poster: asset('posters/hello.jpg'),
     cover: asset('covers/hello.jpg'),
@@ -201,6 +202,10 @@ export const songs = [
 const MAX_HOLD = 10
 
 songs.forEach((s) => {
+  if (s.offset) s.lyrics.forEach((l) => {
+    l.t += s.offset
+    if (l.end != null) l.end += s.offset
+  })
   s.lyrics.forEach((l, i) => {
     const next = s.lyrics[i + 1]
     if (l.end == null) l.end = Math.min(next ? next.t : Infinity, l.t + MAX_HOLD)
