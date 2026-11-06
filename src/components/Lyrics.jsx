@@ -77,7 +77,7 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
   }
 
   const stickers = theme.stickers.length
-    ? Array.from({ length: r.int(2, 4) }, (_, k) => (
+    ? Array.from({ length: r.int(...(theme.stickerCount || [2, 4])) }, (_, k) => (
         <span
           key={k}
           className="sticker boil"
@@ -96,14 +96,22 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
     : null
 
   const spiral =
-    theme.spiral && r() < theme.spiral ? (
-      <img
-        className="spiral-sticker"
-        src={`${import.meta.env.BASE_URL}spiral.png`}
-        alt=""
-        style={{ left: `${r.range(55, 95)}%`, top: `${r.range(-30, 60)}%`, '--r': `${r.range(0, 360)}deg` }}
-      />
-    ) : null
+    theme.spiral && r() < theme.spiral
+      ? Array.from({ length: r.int(1, 2) }, (_, k) => (
+          <img
+            key={k}
+            className="spiral-sticker"
+            src={`${import.meta.env.BASE_URL}spiral.png`}
+            alt=""
+            style={{
+              left: `${k ? r.range(-6, 20) : r.range(70, 100)}%`,
+              top: `${k ? r.range(70, 110) : r.range(-25, 30)}%`,
+              '--r': `${r.range(0, 360)}deg`,
+              '--sz': `${r.range(1.8, 3.4)}em`,
+            }}
+          />
+        ))
+      : null
 
   return (
     <div className={`lyric-line theme-${song.theme}${leaving ? ' leaving' : ''}`} aria-hidden={leaving}>

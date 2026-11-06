@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Vinyl from './Vinyl'
+import FlowBackground from './FlowBackground'
 import { RansomWord } from './cutouts'
 import { rng } from '../lib/rng'
 
@@ -145,8 +146,9 @@ export default function Crate({ songs, onPick, mobile, nowPlaying, onResume }) {
   return (
     <section
       className={`crate ${mobile ? 'is-mobile' : 'is-desktop'}`}
-      style={{ '--crate-bg': `url(${import.meta.env.BASE_URL}crate-bg.jpg)` }}
     >
+      <FlowBackground src={`${import.meta.env.BASE_URL}crate-bg.jpg`} strength={0.014} speed={0.32} />
+      <div className="crate-vignette" />
       <header className="crate-head">
         <p className="crate-kicker">side a · spin something</p>
         <h1 className="crate-title">{title}</h1>

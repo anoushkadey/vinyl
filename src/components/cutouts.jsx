@@ -225,7 +225,7 @@ const fade = {
   scrap: { fill: 'black-paper', chance: 0.75 },
   stickers: ['✝', '✦', '✧'],
   stickerColor: '#c9a0e8',
-  spiral: 0.55,
+  spiral: 1,
   word(w, { r }) {
     return (
       <span className="cut-word fade-word">
@@ -255,8 +255,9 @@ const fade = {
    the "you know i'm such a fooool for you" poster. */
 const linger = {
   rowChars: 12,
-  scrap: { fill: 'notebook', chance: 0.45 },
-  stickers: ['✦', '✶', '★'],
+  scrap: { fill: 'notebook', chance: 0.35 },
+  stickers: ['★', '★', '✦', '★', '✶'],
+  stickerCount: [6, 10],
   stickerColor: '#d9b44a',
   word(w, { r }) {
     let t = w.toLowerCase()
