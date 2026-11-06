@@ -35,6 +35,12 @@ function fitWords(words) {
   return out
 }
 
+// phone: one pond, labels squeezed into the area above the record
+function placeSingle(slot) {
+  const [x0, y0] = slots[slot]
+  return { x: 6 + (x0 / PW) * 78, y: 11 + (y0 / PH) * 52 }
+}
+
 function place(panel, slot) {
   const [x0, y0, x1, y1] = slots[slot]
   const mirrored = panel !== 1
@@ -46,7 +52,7 @@ function place(panel, slot) {
   return { x, y }
 }
 
-const PondLine = memo(function PondLine({ line, idx, leaving }) {
+const PondLine = memo(function PondLine({ line, idx, leaving, single }) {
   const r = rng(`francis-pond:${idx}`)
   const words = fitWords(line.text.toLowerCase().split(/\s+/).filter(Boolean))
   const picks = pickSlots(words.length)
@@ -55,9 +61,9 @@ const PondLine = memo(function PondLine({ line, idx, leaving }) {
 
   return (
     <div className={`pond-line${leaving ? ' leaving' : ''}`}>
-      {[0, 1, 2].map((panel) =>
+      {(single ? [1] : [0, 1, 2]).map((panel) =>
         words.map((w, k) => {
-          const { x, y } = place(panel, picks[k])
+          const { x, y } = single ? placeSingle(picks[k]) : place(panel, picks[k])
           return (
             <span
               key={`${panel}-${k}`}

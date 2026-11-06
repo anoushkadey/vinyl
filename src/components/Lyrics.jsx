@@ -133,7 +133,8 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
 })
 
 export default function Lyrics({ song, active, mobile }) {
-  const ponds = !mobile && !!song.posterWide
+  // Francis: label layout in the pond (three ponds on laptop, one on phone)
+  const ponds = !!song.posterWide
   const Line = ponds ? PondLine : LyricLine
   const [leavingIdx, setLeavingIdx] = useState(null)
   const last = useRef(active)
@@ -151,10 +152,10 @@ export default function Lyrics({ song, active, mobile }) {
   return (
     <div className={`lyrics-stage${ponds ? ' ponds' : ''}`} aria-live="polite">
       {leavingIdx != null && leavingIdx !== active && song.lyrics[leavingIdx] && (
-        <Line key={`l${leavingIdx}`} song={song} line={song.lyrics[leavingIdx]} idx={leavingIdx} mobile={mobile} leaving />
+        <Line key={`l${leavingIdx}`} single={mobile} song={song} line={song.lyrics[leavingIdx]} idx={leavingIdx} mobile={mobile} leaving />
       )}
       {active >= 0 && (
-        <Line key={`a${active}`} song={song} line={song.lyrics[active]} idx={active} mobile={mobile} />
+        <Line key={`a${active}`} single={mobile} song={song} line={song.lyrics[active]} idx={active} mobile={mobile} />
       )}
       <span className="sr-only">{active >= 0 ? song.lyrics[active].text : ''}</span>
     </div>

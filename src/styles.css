@@ -296,12 +296,30 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ============ mobile ============ */
-.player.is-mobile { --lyr: clamp(22px, 6.6vw, 34px); }
-.player.is-mobile .lyrics-stage { left: 5vw; right: 5vw; top: 9vh; bottom: 50vh; }
-.player.is-mobile .dock { left: 50%; transform: translateX(-50%); bottom: max(16px, env(safe-area-inset-bottom)); width: min(64vw, 36vh); }
-.player.is-mobile .progress { width: 118%; }
-.player.is-mobile .np-title { font-size: 16px; }
+.player.is-mobile { --lyr: clamp(24px, 7.4vw, 38px); }
+.player.is-mobile .lyrics-stage { left: 5vw; right: 5vw; top: 10vh; bottom: 47vh; }
+.player.is-mobile .lyrics-stage.ponds { inset: 0 !important; font-size: clamp(14px, 4.2vw, 19px); }
+.player.is-mobile .dock { left: 50%; transform: translateX(-50%); bottom: max(14px, env(safe-area-inset-bottom)); width: min(54vw, 30vh); }
+.player.is-mobile .progress { width: 150%; }
+.player.is-mobile .controls { gap: 10px; }
+.player.is-mobile .np-label { margin-bottom: 12px; }
+.player.is-mobile .np-title { font-size: 15px; }
 .player.is-mobile .back-btn { left: 14px; font-size: 12px; }
+.player.is-mobile .poster { inset: 0; }
+.player.is-mobile .poster-shade { background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,.28) 100%); }
+.player.is-mobile.theme-francis .poster-shade { background: none; }
+.player.is-mobile .bg-spirals img { width: 38vh !important; }
+.lyric-line { max-width: 100%; }
+.player.is-mobile .lyric-line { align-items: stretch; }
+
+/* small landscape phones: keep the laptop layout but tighten it */
+@media (max-height: 500px) and (orientation: landscape) {
+  .player.is-desktop .dock { width: min(22vw, 44vh); bottom: 2vh; }
+  .player.is-desktop .np-label { display: none; }
+  .player { --lyr: clamp(20px, 3.4vw, 34px); }
+  .controls button { width: 30px; height: 30px; }
+  .controls .pp { width: 40px; height: 40px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .boil, .sticker, .grain, .poster { animation: none !important; }
