@@ -164,8 +164,9 @@ export const songs = [
     title: 'Linger',
     artist: 'The Cranberries',
     theme: 'linger',
-    // [from, to, seconds]: 1:38-1:50 +1.5s, 2:01-2:27 +2s, from 3:12 2s earlier
-    shifts: [[98, 110, 1.5], [121, 147, 2], [192, 999, -2]],
+    // [from, to, seconds]: 1:38-1:50 +1.5s, 2:01-2:27 +2s, from 3:12 2s earlier,
+    // and the lines after "And I'm in so deep" a further 2s earlier
+    shifts: [[98, 110, 1.5], [121, 147, 2], [192, 999, -2], [200, 999, -2]],
     audio: asset('audio/linger.mp3'),
     poster: asset('posters/linger.jpg'),
     posterDesk: asset('posters/linger-desk.jpg'),

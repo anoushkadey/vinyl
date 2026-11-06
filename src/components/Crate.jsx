@@ -177,7 +177,7 @@ export default function Crate({ songs, onPick, mobile, nowPlaying, onResume }) {
               className="crate-item"
               style={{ width: D, height: D }}
             >
-              <Vinyl cover={s.cover} />
+              <Vinyl cover={s.cover} spinning />
             </div>
           )
         })}

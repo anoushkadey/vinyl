@@ -41,12 +41,13 @@ const Doodles = memo(function Doodles({ theme, line, mobile }) {
   // every few lines instead of every line
   // Francis: only mid-song, changing every few lines.
   // Hello / the perfect pair: two pink pieces, changing every two lines.
-  const calm = theme !== 'linger'
-  if (theme === 'francis' && (line < 5 || line > 10)) return null
-  const key = theme === 'francis' ? Math.floor((line - 5) / 3) : calm ? Math.floor(line / 2) : line
+  const calm = theme !== 'linger' && theme !== 'francis'
+  // Francis: from the second verse on (not at the start), like Linger
+  if (theme === 'francis' && line < 5) return null
+  const key = calm ? Math.floor(line / 2) : line
   const r = rng(`${theme}:doodles:${key}`)
   const spots = [...SPOTS[theme][mobile ? 'phone' : 'desk']]
-  const n = calm ? (mobile ? 1 : 2) : mobile ? 2 : r.int(3, 4)
+  const n = calm ? 2 : mobile ? 2 : 3
   const pool = [...set]
   const items = []
   for (let k = 0; k < n && spots.length && pool.length; k++) {
@@ -59,7 +60,7 @@ const Doodles = memo(function Doodles({ theme, line, mobile }) {
         style={{
           left: `${x}%`,
           top: `${y}%`,
-          height: mobile ? '9vh' : `${r.range(calm ? 11 : 13, calm ? 16 : 19)}vh`,
+          height: mobile ? '11vh' : `${r.range(18, 25)}vh`,
           '--r': `${r.range(-14, 14)}deg`,
           animationDelay: `${0.15 + k * 0.18}s`,
         }}
