@@ -252,7 +252,7 @@ const fade = {
    the "you know i'm such a fooool for you" poster. */
 const linger = {
   rowChars: 12,
-  scrap: { fill: 'notebook', chance: 0.35 },
+  scrap: null,
   stickers: ['★', '★', '✦', '★', '✶'],
   stickerCount: [6, 10],
   stickerColor: '#d9b44a',

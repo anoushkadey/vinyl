@@ -13,6 +13,8 @@ const parse = (raw) =>
         const [, m1, s1, m2, s2, text] = range
         return { t: +m1 * 60 + +s1, end: +m2 * 60 + +s2 + 0.9, text }
       }
+      const single = l.match(/^\((\d+):(\d+)\)\s*(.*)$/)
+      if (single) return { t: +single[1] * 60 + +single[2], text: single[3] }
       const m = l.match(/^\[(\d+):(\d+)\]\s*(.*)$/)
       return { t: +m[1] * 60 + +m[2], text: m[3] }
     })
@@ -31,36 +33,30 @@ export const songs = [
     posterPos: 'center 32%',
     accent: '#ee5f93',
     lyrics: parse(`
-[00:08] Hello?
-[00:28] Are you into me, like I'm into you?
-[00:32] Do you wanna do the things I wanna do with you?
-[00:37] You're so close, and yet so far
-[00:42] I wonder how you look when you're in the dark
-[00:48] You're just one click away, click away, click away
-[00:55] From something real or fake, real or fake, real or fake
-[00:59] You're just one click away, click away, click away
-[01:02] From something real or fake, real or fake, real or fake
-[01:05] Played you DOOM, man, you play Drake
-[01:08] You left crumbs all on my face
-[01:11] Taste like RiRi, taste like Bey
-[01:14] Bought you Fenty, took his place
-[01:17] Rolled your weed and kissed your face
-[01:19] Man, wanna smoke you out like all-day
-[01:22] Man, wanna do a quickie in the hallway, can
-[01:24] You be all down for the boy, no mass
-[01:26] Hot jump, skip rope, twenty-three years old
-[01:29] Made a hundred grand and went broke, I'm an asshole
-[01:31] Clairo, will you be my real or my fake though?
-[01:33] Pesos, cashing out checks when I say so
-[01:36] Frame my life and take my soul
-[01:39] Make me crazy, make me old
-[01:42] Save me roses, text my phone
-[01:45] Fake like rappers, fake like jokes
-[01:47] I know
-[01:48] You're just one click away, click away, click away
-[01:51] From something real or fake, real or fake, real or fake
-[01:58] You're just one click away, click away, click away
-[02:02] From something real or fake, real or fake, real or fake
+(0:08) Hello?
+(0:28 - 0:36) Are you into me, like I'm into you? Do you wanna do the things I wanna do with you?
+(0:37 - 0:46) You're so close, and yet so far. I wonder how you look when you're in the dark
+(0:48 - 0:56) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
+(0:59 - 1:05) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
+(1:05 - 1:10) Played you DOOM, man, you play Drake
+(1:11 - 1:13) You left crumbs all on my face
+(1:13 - 1:16) Taste like RiRi, taste like Bey
+(1:17 - 1:19) Bought you Fenty, took his place
+(1:19 - 1:21) Rolled your weed and kissed your face
+(1:22 - 1:24) Man, wanna smoke you out like all-day
+(1:24 - 1:26) Man, wanna do a quickie in the hallway, can
+(1:26 - 1:28) You be all down for the boy, no mass
+(1:29 - 1:30) Hot jump, skip rope, twenty-three years old
+(1:31 - 1:33) Made a hundred grand and went broke, I'm an asshole
+(1:33 - 1:35) Clairo, will you be my real or my fake though?
+(1:36 - 1:38) Pesos, cashing out checks when I say so
+(1:38 - 1:40) Frame my life and take my soul
+(1:40 - 1:41) Make me crazy, make me old
+(1:42 - 1:43) Save me roses, text my phone
+(1:43 - 1:45) Fake like rappers, fake like jokes
+(1:45) I know
+(1:47 - 1:55) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
+(1:58 - 2:05) You're just one click away, click away, click away from something real or fake, real or fake, real or fake
 `),
   },
   {
@@ -70,26 +66,19 @@ export const songs = [
     theme: 'pair',
     audio: asset('audio/perfect-pair.mp3'),
     poster: asset('posters/perfect-pair.jpg'),
+    posterDesk: asset('posters/perfect-pair-wide.jpg'),
     cover: asset('covers/perfect-pair.jpg'),
-    posterPos: 'center 30%',
+    posterPos: 'center 12%',
     accent: '#ec4f8f',
     lyrics: parse(`
-[00:07] You ought to know that I think we're one and the same
-[00:12] I don't think we could help it, no, I don't think we could help it
-[00:19] We don't talk much, guess 'cause nothing has changed
-[00:26] And I'm not sure I like it, and I'm so tired of fighting
-[00:33] If I told you, you'd know how to go and break my heart in two
-[00:41] 'Cause I would anyways, we'd end up like always
-[00:47] You know me, you better show me that you could say it to my face
-[00:53] 'Cause you know we're the same, there's worse things I can take
-[01:06] I know you hate it when there's nothing to say
-[01:12] I'm not quite sure we'd fix it, guess we're so used to it
-[01:18] Wish I had known this from the beginning
-[01:24] We'd find it hard to work out, why we have all this doubt
-[01:33] If I told you, you'd know how to go and break my heart in two
-[01:40] 'Cause I would anyways, we'd end up like always
-[01:47] You know me, you better show me that you could say it to my face
-[01:52] 'Cause you know we're the same, there's worse things I can take
+(0:07 - 0:18) You ought to know that I think we're one and the same, I don't think we could help it, no, I don't think we could help it
+(0:19 - 0:31) We don't talk much, guess 'cause nothing has changed, and I'm not sure I like it, and I'm so tired of fighting
+(0:32 - 0:46) If I told you, you'd know how to go and break my heart in two, 'cause I would anyways, we'd end up like always
+(0:47 - 0:59) You know me, you better show me that you could say it to my face, 'cause you know we're the same, there's worse things I can take
+(1:06 - 1:17) I know you hate it when there's nothing to say, I'm not quite sure we'd fix it, guess we're so used to it
+(1:18 - 1:30) Wish I had known this from the beginning, we'd find it hard to work out, why we have all this doubt
+(1:31 - 1:45) If I told you, you'd know how to go and break my heart in two, 'cause I would anyways, we'd end up like always
+(1:46 - 1:58) You know me, you better show me that you could say it to my face, 'cause you know we're the same, there's worse things I can take
 `),
   },
   {
@@ -167,46 +156,33 @@ export const songs = [
     theme: 'linger',
     audio: asset('audio/linger.mp3'),
     poster: asset('posters/linger.jpg'),
+    posterDesk: asset('posters/linger-wide.jpg'),
     cover: asset('covers/linger.jpg'),
-    posterPos: 'center 6%',
+    posterPos: 'center center',
     accent: '#5d7a3a',
     lyrics: parse(`
-[00:49] If you, if you could return
-[00:53] Don't let it burn, don't let it fade
-[00:58] I'm sure I'm not being rude
-[01:01] But it's just your attitude
-[01:04] It's tearing me apart
-[01:06] It's ruining everything
-[01:10] And I swore, I swore I would be true
-[01:14] And honey, so did you
-[01:17] So why were you holding her hand?
-[01:20] Is that the way we stand?
-[01:23] Were you lying all the time?
-[01:26] Was it just a game to you?
-[01:28] But I'm in so deep
-[01:30] You know I'm such a fool for you
-[01:37] You've got me wrapped around your finger
-[01:40] Do you have to let it linger?
-[01:43] Do you have to, do you have to, do you have to let it linger?
-[01:47] Oh, I thought the world of you
-[01:51] I thought nothing could go wrong
-[01:54] But I was wrong, I was wrong
-[02:10] If you, if you could get by
-[02:14] Trying not to lie
-[02:18] Things wouldn't be so confused
-[02:21] And I wouldn't feel so used
-[02:25] But you always really knew
-[02:27] I just want to be with you
-[02:30] And I'm in so deep
-[02:33] You know I'm such a fool for you
-[02:38] You've got me wrapped around your finger
-[02:40] Do you have to let it linger?
-[02:43] Do you have to, do you have to, do you have to let it linger?
-[03:14] And I'm in so deep
-[03:16] You know I'm such a fool for you
-[03:20] You've got me wrapped around your finger
-[03:23] Do you have to let it linger?
-[03:26] Do you have to, do you have to, do you have to let it linger?
+(0:49 - 0:59) If you, if you could return, don't let it burn, don't let it fade
+(0:59 - 1:04) I'm sure I'm not being rude, but it's just your attitude
+(1:04 - 1:10) It's tearing me apart, it's ruining everything
+(1:11 - 1:17) And I swore, I swore I would be true, and honey, so did you
+(1:18 - 1:22) So why were you holding her hand? Is that the way we stand?
+(1:23 - 1:28) Were you lying all the time? Was it just a game to you?
+(1:29 - 1:38) But I'm in so deep, you know I'm such a fool for you
+(1:38 - 1:47) You've got me wrapped around your finger, do you have to let it linger?
+(1:47 - 1:55) Do you have to, do you have to, do you have to let it linger?
+(1:55 - 2:00) Oh, I thought the world of you, I thought nothing could go wrong
+(2:00 - 2:05) But I was wrong, I was wrong
+(2:05 - 2:13) If you, if you could get by, trying not to lie
+(2:13 - 2:25) Things wouldn't be so confused, and I wouldn't feel so used
+(2:25 - 2:29) But you always really knew, I just want to be with you
+(2:30 - 2:38) And I'm in so deep, you know I'm such a fool for you
+(2:39 - 2:47) You've got me wrapped around your finger, do you have to let it linger?
+(2:47 - 3:00) Do you have to, do you have to, do you have to let it linger?
+(3:14 - 3:24) And I'm in so deep, you know I'm such a fool for you
+(3:25 - 3:33) You've got me wrapped around your finger, do you have to let it linger?
+(3:33 - 3:45) Do you have to, do you have to, do you have to let it linger?
+(3:45 - 3:55) You know I'm such a fool for you, you've got me wrapped around your finger
+(3:55 - 4:03) Do you have to let it linger? Do you have to, do you have to, do you have to let it linger?
 `),
   },
 ]

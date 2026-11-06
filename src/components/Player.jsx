@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Vinyl from './Vinyl'
 import Lyrics from './Lyrics'
+import Doodles from './Doodles'
 
 const fmt = (s) => {
   if (!isFinite(s)) return '0:00'
@@ -62,6 +63,12 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
     }
   }
 
+  // doodles stay on screen through instrumental gaps until the next line
+  const lastRef = useRef({ song: null, line: 0 })
+  if (lastRef.current.song !== song.id) lastRef.current = { song: song.id, line: 0 }
+  if (active >= 0) lastRef.current.line = active
+  const lastLine = lastRef.current.line
+
   const skip = (d) => {
     if (!audio) return
     audio.currentTime = Math.max(0, Math.min((audio.duration || 0) - 0.1, audio.currentTime + d))
@@ -80,7 +87,10 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
         style={
           !mobile && song.posterWide
             ? { backgroundImage: `url(${song.posterWide})`, backgroundSize: '100% 100%' }
-            : { backgroundImage: `url(${song.poster})`, backgroundPosition: mobile ? 'center' : song.posterPos }
+            : {
+                backgroundImage: `url(${!mobile && song.posterDesk ? song.posterDesk : song.poster})`,
+                backgroundPosition: mobile ? 'center' : song.posterPos,
+              }
         }
       />
       <div className="poster-shade" />
@@ -100,6 +110,7 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
         ← back to the crate
       </button>
 
+      <Doodles theme={song.theme} line={lastLine} mobile={mobile} />
       <Lyrics key={song.id} song={song} active={active} mobile={mobile} />
 
       <div className="dock" key={`dock-${song.id}`}>

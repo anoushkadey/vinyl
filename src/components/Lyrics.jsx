@@ -38,12 +38,18 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
     }
   })
 
-  const rows = splitRows(words, Math.round(theme.rowChars * (mobile ? 0.68 : 1)))
+  // long blocks (two sung lines in one cue) get smaller type and wider rows
+  // so the whole verse fits; words appear across the cue, roughly as sung
+  const chars = line.text.length
+  const fit = Math.max(0.5, Math.min(1, Math.sqrt(52 / chars)))
+  const rows = splitRows(words, Math.round((theme.rowChars * (mobile ? 0.68 : 1)) / fit))
   const dur = Math.max(1.2, line.end - line.t)
   const step =
     theme.stagger === 'spread'
       ? Math.min(0.6, (dur * 0.7) / words.length)
-      : Math.min(0.2, (dur * 0.5) / words.length)
+      : words.length > 9
+        ? Math.min(0.55, (dur * 0.78) / words.length)
+        : Math.min(0.2, (dur * 0.5) / words.length)
 
   // staircase: each row drifts right then occasionally resets, like the
   // collage reference.
@@ -115,7 +121,11 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
       : null
 
   return (
-    <div className={`lyric-line theme-${song.theme}${leaving ? ' leaving' : ''}`} aria-hidden={leaving}>
+    <div
+      className={`lyric-line theme-${song.theme}${leaving ? ' leaving' : ''}`}
+      aria-hidden={leaving}
+      style={{ fontSize: `${fit}em` }}
+    >
       {scrap}
       {rows.map((row, ri) => (
         <div className="lyric-row" key={ri} style={{ marginLeft: `${offsets[ri]}%` }}>
