@@ -27,10 +27,10 @@ export const songs = [
     title: 'Hello?',
     artist: 'Clairo ft. Rejjie Snow',
     theme: 'hello',
-    // intro, Clairo's verse and first chorus land ~2s early on this recording;
-    // Rejjie Snow's verse and the last chorus are already in time
-    offset: 2,
-    offsetBefore: 65,
+    // per-section timing fixes against this recording: [from, to, seconds]
+    // (applied to the times above). Intro, verse 1, first chorus +2s;
+    // first line of Rejjie Snow's verse +1s; last chorus +1.5s
+    shifts: [[0, 65, 2], [65, 66, 1], [107, 999, 1.5]],
     audio: asset('audio/hello.mp3'),
     poster: asset('posters/hello.jpg'),
     cover: asset('covers/hello.jpg'),
@@ -164,6 +164,8 @@ export const songs = [
     title: 'Linger',
     artist: 'The Cranberries',
     theme: 'linger',
+    // [from, to, seconds]: 1:38-1:50 +1.5s, 2:01-2:27 +2s, from 3:12 2s earlier
+    shifts: [[98, 110, 1.5], [121, 147, 2], [192, 999, -2]],
     audio: asset('audio/linger.mp3'),
     poster: asset('posters/linger.jpg'),
     posterDesk: asset('posters/linger-desk.jpg'),
@@ -205,11 +207,14 @@ export const songs = [
 const MAX_HOLD = 10
 
 songs.forEach((s) => {
-  if (s.offset) s.lyrics.forEach((l) => {
-    if (s.offsetBefore != null && l.t >= s.offsetBefore) return
-    l.t += s.offset
-    if (l.end != null) l.end += s.offset
-  })
+  s.shifts?.forEach(([from, to, d]) =>
+    s.lyrics.forEach((l) => {
+      if (l.t0 == null) l.t0 = l.t
+      if (l.t0 < from || l.t0 >= to) return
+      l.t += d
+      if (l.end != null) l.end += d
+    }),
+  )
   s.lyrics.forEach((l, i) => {
     const next = s.lyrics[i + 1]
     if (l.end == null) l.end = Math.min(next ? next.t : Infinity, l.t + MAX_HOLD)

@@ -337,4 +337,4 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .player.theme-linger { background: #030303; }
 
 /* Francis: blue doodles turned into soft, faded white so they sit back */
-.doodles-francis .doodle img { filter: grayscale(1) brightness(2.6) contrast(.75); opacity: .42; }
+.doodles-francis .doodle img, .doodles-hello .doodle img, .doodles-pair .doodle img { opacity: .9; }
