@@ -165,7 +165,7 @@ export const songs = [
     audio: asset('audio/linger.mp3'),
     poster: asset('posters/linger.jpg'),
     cover: asset('covers/linger.jpg'),
-    posterPos: 'center 40%',
+    posterPos: 'center 6%',
     accent: '#5d7a3a',
     lyrics: parse(`
 [00:49] If you, if you could return

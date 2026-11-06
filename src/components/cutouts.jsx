@@ -207,35 +207,45 @@ const francis = {
   },
 }
 
-/* Fade Into You — Mazzy Star. Purple paper letters (sheet 1, the purple one). */
-const FADE_BG = ['#c9a3dc', '#9b6bbf', '#e8a7cf', '#7a4a9a', '#f4e7d6', '#d58ac0', '#b48ad6', '#5e3a7e']
-const FADE_FG = ['#1b1020', '#4a2470', '#e05a9a', '#ffffff', '#f6e9d7']
-const FADE_FONTS = ["'Playfair Display', serif", "'Abril Fatface', serif", "'DM Serif Display', serif", "'Fraunces', serif"]
+/* Fade Into You — Mazzy Star. Edgy gothic: purple scissor-cut tiles on
+   black with white letters in mismatched fonts (typewriter, script,
+   blackletter, bold sans, serif), like the purple/black reference sheet. */
+const FADE_BG = ['#5b2386', '#7a3aa3', '#9a4cb8', '#45186a', '#a868c6', '#6a2c93', '#8b3fae', '#b07ccc', '#3a1258']
+const FADE_FONTS = [
+  "'Special Elite', monospace",
+  "'Great Vibes', cursive",
+  "'UnifrakturMaguntia', serif",
+  "'Archivo Black', sans-serif",
+  "'Playfair Display', serif",
+  "'DM Serif Display', serif",
+  "'Courier Prime', monospace",
+]
 const fade = {
-  rowChars: 13,
-  scrap: { fill: 'lilac-gingham', chance: 0.65 },
-  stickers: ['✦', '✧'],
-  stickerColor: '#f3e3ff',
+  rowChars: 11,
+  scrap: { fill: 'black-paper', chance: 0.75 },
+  stickers: ['✝', '✦', '✧'],
+  stickerColor: '#c9a0e8',
+  spiral: 0.55,
   word(w, { r }) {
     return (
-      <span className="cut-word">
-        {lettersFromSheet(w, 'purple', r, (ch, i, rot) => {
-          const bg = r.pick(FADE_BG)
-          let fg = r.pick(FADE_FG)
-          if (fg === bg) fg = '#1b1020'
+      <span className="cut-word fade-word">
+        {[...w].map((ch, i) => {
+          const font = r.pick(FADE_FONTS)
+          const up = r() < 0.35
           return (
             <PaperLetter
               key={i}
-              ch={ch.toLowerCase()}
-              bg={bg}
-              color={fg}
-              font={r.pick(FADE_FONTS)}
-              rot={rot}
+              ch={up ? ch.toUpperCase() : ch.toLowerCase()}
+              bg={r.pick(FADE_BG)}
+              color="#fbf7ff"
+              font={font}
+              rot={r.range(-9, 9)}
               clip={patchPolygon(r)}
-              shadow={r() < 0.4 ? '0.05em 0.05em 0 #fff' : 'none'}
+              size={font.includes('Vibes') ? 1.12 : 1}
+              className="fade-tile"
             />
           )
-        }, 1.3)}
+        })}
       </span>
     )
   },

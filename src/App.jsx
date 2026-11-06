@@ -50,12 +50,15 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e) => {
+      // ignore keys aimed at a focused button/slider so space doesn't toggle twice
       if (view !== 'player' || e.target.tagName === 'INPUT') return
+      const a = audioRef.current
       if (e.code === 'Space') {
+        if (e.target.tagName === 'BUTTON') return
         e.preventDefault()
         toggle()
-      } else if (e.key === 'ArrowRight') load(index + 1)
-      else if (e.key === 'ArrowLeft') load(index - 1)
+      } else if (e.key === 'ArrowRight') a.currentTime = Math.min(a.duration || 0, a.currentTime + 10)
+      else if (e.key === 'ArrowLeft') a.currentTime = Math.max(0, a.currentTime - 10)
       else if (e.key === 'Escape') setView('crate')
     }
     window.addEventListener('keydown', onKey)

@@ -18,6 +18,18 @@ const Icon = {
   play: (
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l12 7-12 7z" /></svg>
   ),
+  back10: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5V2L7 6l5 4V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z" />
+      <text x="12" y="16.2" textAnchor="middle" fontSize="6.4" fontWeight="700" fontFamily="Arial, sans-serif">10</text>
+    </svg>
+  ),
+  fwd10: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5V2l5 4-5 4V7a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8z" />
+      <text x="12" y="16.2" textAnchor="middle" fontSize="6.4" fontWeight="700" fontFamily="Arial, sans-serif">10</text>
+    </svg>
+  ),
   pause: (
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z" /></svg>
   ),
@@ -50,12 +62,18 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
     }
   }
 
+  const skip = (d) => {
+    if (!audio) return
+    audio.currentTime = Math.max(0, Math.min((audio.duration || 0) - 0.1, audio.currentTime + d))
+    setTime(audio.currentTime)
+  }
+
   const seek = (e) => {
     if (audio && dur) audio.currentTime = (+e.target.value / 1000) * dur
   }
 
   return (
-    <section className={`player theme-${song.theme} ${mobile ? 'is-mobile' : 'is-desktop'}`}>
+    <section className={`player theme-${song.theme} ${mobile ? 'is-mobile' : 'is-desktop'}${playing ? '' : ' is-paused'}`}>
       <div
         key={`poster-${song.id}`}
         className="poster"
@@ -70,37 +88,35 @@ export default function Player({ song, audio, playing, onToggle, onPrev, onNext,
       <Lyrics key={song.id} song={song} active={active} mobile={mobile} />
 
       <div className="dock" key={`dock-${song.id}`}>
-        <div className="sleeve">
-          <div className="np-label">
-            <span className="np-kicker">now playing</span>
-            <span className="np-title">{song.title}</span>
-            <span className="np-artist">{song.artist}</span>
-          </div>
-          <img className="sleeve-art" src={song.cover} alt={`${song.title} cover`} />
-          <div className="progress">
-            <input
-              type="range"
-              min="0"
-              max="1000"
-              value={dur ? Math.round((time / dur) * 1000) : 0}
-              onChange={seek}
-              aria-label="Seek"
-              style={{ '--p': `${dur ? (time / dur) * 100 : 0}%` }}
-            />
-            <div className="times">
-              <span>{fmt(time)}</span>
-              <span>{fmt(dur)}</span>
-            </div>
-          </div>
-          <div className="controls">
-            <button onClick={onPrev} aria-label="Previous song">{Icon.prev}</button>
-            <button className="pp" onClick={onToggle} aria-label={playing ? 'Pause' : 'Play'}>
-              {playing ? Icon.pause : Icon.play}
-            </button>
-            <button onClick={onNext} aria-label="Next song">{Icon.next}</button>
-          </div>
+        <div className="np-label">
+          <span className="np-title">{song.title}</span>
+          <span className="np-artist">{song.artist}</span>
         </div>
         <Vinyl cover={song.cover} spinning={playing} className="dock-vinyl" />
+        <div className="progress">
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            value={dur ? Math.round((time / dur) * 1000) : 0}
+            onChange={seek}
+            aria-label="Seek"
+            style={{ '--p': `${dur ? (time / dur) * 100 : 0}%` }}
+          />
+          <div className="times">
+            <span>{fmt(time)}</span>
+            <span>{fmt(dur)}</span>
+          </div>
+        </div>
+        <div className="controls">
+          <button onClick={onPrev} aria-label="Previous song">{Icon.prev}</button>
+          <button onClick={() => skip(-10)} aria-label="Back 10 seconds">{Icon.back10}</button>
+          <button className="pp" onClick={onToggle} aria-label={playing ? 'Pause' : 'Play'}>
+            {playing ? Icon.pause : Icon.play}
+          </button>
+          <button onClick={() => skip(10)} aria-label="Forward 10 seconds">{Icon.fwd10}</button>
+          <button onClick={onNext} aria-label="Next song">{Icon.next}</button>
+        </div>
       </div>
     </section>
   )

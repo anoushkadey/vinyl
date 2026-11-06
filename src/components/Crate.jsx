@@ -143,7 +143,10 @@ export default function Crate({ songs, onPick, mobile, nowPlaying, onResume }) {
   )
 
   return (
-    <section className={`crate ${mobile ? 'is-mobile' : 'is-desktop'}`}>
+    <section
+      className={`crate ${mobile ? 'is-mobile' : 'is-desktop'}`}
+      style={{ '--crate-bg': `url(${import.meta.env.BASE_URL}crate-bg.jpg)` }}
+    >
       <header className="crate-head">
         <p className="crate-kicker">side a · spin something</p>
         <h1 className="crate-title">{title}</h1>
@@ -172,7 +175,7 @@ export default function Crate({ songs, onPick, mobile, nowPlaying, onResume }) {
               className="crate-item"
               style={{ width: D, height: D }}
             >
-              <Vinyl cover={s.cover} />
+              <Vinyl cover={s.cover} spinning />
             </div>
           )
         })}

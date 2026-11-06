@@ -95,6 +95,16 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
       ))
     : null
 
+  const spiral =
+    theme.spiral && r() < theme.spiral ? (
+      <img
+        className="spiral-sticker"
+        src={`${import.meta.env.BASE_URL}spiral.png`}
+        alt=""
+        style={{ left: `${r.range(55, 95)}%`, top: `${r.range(-30, 60)}%`, '--r': `${r.range(0, 360)}deg` }}
+      />
+    ) : null
+
   return (
     <div className={`lyric-line theme-${song.theme}${leaving ? ' leaving' : ''}`} aria-hidden={leaving}>
       {scrap}
@@ -107,6 +117,7 @@ const LyricLine = memo(function LyricLine({ song, line, idx, mobile, leaving }) 
           ))}
         </div>
       ))}
+      {spiral}
       {stickers}
     </div>
   )
