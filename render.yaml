@@ -1,0 +1,12 @@
+# Render Blueprint: deploys the site as a free static site.
+services:
+  - type: web
+    name: vinyl
+    runtime: static
+    branch: claude/vinyl-lyrics-player-8v2w0j
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    headers:
+      - path: /audio/*
+        name: Cache-Control
+        value: public, max-age=604800
